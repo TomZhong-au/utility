@@ -31,7 +31,7 @@ const Instalment = () => {
       m={'auto'}
       
     >
-      <Grid templateColumns="repeat(2, 1fr)" gap={".5rem"} px={'1rem'} >
+      <Grid templateColumns="repeat(2, 1fr)" gap={"5px"} px={'5px'} >
         <GridItem fontSize={"2xl"}>
           <label htmlFor="total" color="blue">
             Total
