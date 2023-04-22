@@ -1,17 +1,12 @@
 import {
   Box,
-  Divider,
   Grid,
   GridItem,
-  HStack,
-  Input,
   NumberInput,
   NumberInputField,
   Spacer,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import genRepayment from '../../util/genRepayment';
-import DataTable from './DataTable';
 import DataCards from './DataCards';
 
 const Instalment = () => {

@@ -13,7 +13,7 @@ import {
 const DataCards = ({ balance }: { balance: number }) => {
   const repaymentData = genRepayment(balance);
 
-  const cards = repaymentData.map((entry, index) => {
+  const cards = repaymentData.map((entry) => {
     const { title, weekly, fortnightly, monthly, color } = entry;
     return (
       <TableContainer key={title} mb={"1.5rem"} fontSize={"1xl"}>
