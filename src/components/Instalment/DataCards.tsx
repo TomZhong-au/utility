@@ -1,3 +1,4 @@
+import { useState } from "react";
 import genRepayment from "../../util/genRepayment";
 import {
   Table,
@@ -9,11 +10,13 @@ import {
   TableContainer,
   Box,
 } from "@chakra-ui/react";
+import PlanModal from "./PlanModal";
 
 const DataCards = ({ balance }: { balance: number }) => {
   const repaymentData = genRepayment(balance);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const cards = repaymentData.map((entry) => {
+  const cards = repaymentData.map((entry,index) => {
     const { title, weekly, fortnightly, monthly, color } = entry;
     return (
       <TableContainer key={title} mb={"1.5rem"} fontSize={"1xl"}>
@@ -28,12 +31,14 @@ const DataCards = ({ balance }: { balance: number }) => {
                 fontSize={"1.5rem"}
               >
                 {" "}
-                <Box userSelect={'none'} as='button'>{title}</Box>
+                <Box userSelect={"none"} onClick={()=>setSelectedIndex(index)}>
+                  {title}
+                </Box>
               </Th>
             </Tr>
           </Thead>
 
-          <Tbody fontSize={'2xl'}>
+          <Tbody fontSize={"2xl"}>
             <Tr>
               <Td>{"Weekly"}</Td>
               <Td>{weekly.toFixed(2)}</Td>
@@ -52,13 +57,18 @@ const DataCards = ({ balance }: { balance: number }) => {
     );
   });
 
-  return <div>
-<Box textAlign={'center'}>
-
-    click on heading to see more details
-</Box>
-    {cards}
-    </div>;
+  return (
+    <div>
+      <Box textAlign={"center"}>click on heading to see more details</Box>
+      {cards}
+      <PlanModal
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
+        plan={repaymentData[selectedIndex]}
+        dataLength={repaymentData.length}
+      />
+    </div>
+  );
 };
 
 export default DataCards;

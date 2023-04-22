@@ -27,3 +27,5 @@ export default function genRepayment(balance: number) {
   ];
   return data
 }
+
+export type Plan=ReturnType<typeof genRepayment>[0]
