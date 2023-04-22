@@ -51,7 +51,7 @@ export default function PlanCard({
         overflow={"hidden"}
       >
         <Box
-        //   mt={"8"}
+          mt={"2"}
           py={2}
           mx={6}
           bg={color}
