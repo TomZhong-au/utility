@@ -17,12 +17,13 @@ const Instalment = () => {
   const orientation = useOrientation();
 
   return (
-    <Box width={"100vw"} bgColor={"darkblue"}>
+    <Box width={"100vw"} bgColor={"#dda706"}>
       <Box
-        // maxW={"500px"}
+        maxW={"1024px"}
         p={"1rem"}
-        pt={"3rem"}
-        bgGradient={"linear(to-tr,purple,yellow.400)"}
+        pt={"1.5rem"}
+        // bgGradient={"linear(to-tr,purple,yellow.400)"}
+        bgColor={'#030352'}
         color={"white"}
         m={"auto"}
       >
@@ -60,7 +61,7 @@ const Instalment = () => {
             </NumberInput>
           </GridItem>
         </Grid>
-        <Spacer height={"4rem"} />
+        <Spacer height={"1rem"} />
 
         {orientation === "landscape" ? (
           <DataTable balance={amount - lumpsum} />

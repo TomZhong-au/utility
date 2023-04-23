@@ -39,14 +39,15 @@ const DataTable = ({ balance }: { balance: number }) => {
           transform={isSelcted ? "scale(1.03,1.03)" : ""}
           fontWeight={isSelcted ? "600" : ""}
           key={title}
+          fontSize={'xl'}
         >
           <Td>
             <Button
               border={"none"}
               bg={color}
-              size={"sm"}
+              size={"md"}
               onClick={() => handleClick(index)}
-              fontSize={"14px"}
+              fontSize={"xl"}
               _hover={{ transform: "scale(1.1,1.1)", border: "none" }}
               _focus={{ outline: "none" }}
             >
