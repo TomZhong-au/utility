@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import genRepayment from "../../util/genRepayment";
 import {
   Table,
@@ -13,10 +13,10 @@ import {
 import PlanModal from "./PlanModal";
 
 const DataCards = ({ balance }: { balance: number }) => {
-  const repaymentData = genRepayment(balance);
+  const repaymentData = useMemo(() => genRepayment(balance), [balance]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const cards = repaymentData.map((entry,index) => {
+  const cards = useMemo(()=>repaymentData.map((entry,index) => {
     const { title, weekly, fortnightly, monthly, color } = entry;
     return (
       <TableContainer key={title} mb={"1.5rem"} fontSize={"1xl"}>
@@ -31,7 +31,7 @@ const DataCards = ({ balance }: { balance: number }) => {
                 fontSize={"1.5rem"}
               >
                 {" "}
-                <Box userSelect={"none"} onClick={()=>setSelectedIndex(index)}>
+                <Box userSelect={"none"} onClick={()=>setSelectedIndex(index)} cursor={"pointer"}>
                   {title}
                 </Box>
               </Th>
@@ -55,7 +55,7 @@ const DataCards = ({ balance }: { balance: number }) => {
         </Table>
       </TableContainer>
     );
-  });
+  }), [repaymentData]);
 
   return (
     <div>
