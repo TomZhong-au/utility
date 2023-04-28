@@ -13,32 +13,23 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon, CalendarIcon, InfoOutlineIcon} from "@chakra-ui/icons";
 import { Plan } from "../../util/genRepayment";
-import { SetStateAction } from "react";
+import { SelectIndexReducerAction, resetIndex, updateIndex } from '../../reducer/instalmentReducer';
 
 interface PlanCardProps {
   plan: Plan;
-  setSelectedIndex: React.Dispatch<SetStateAction<number>>;
   dataLength: number;
+  dispatch: React.Dispatch<SelectIndexReducerAction>;
 }
 
 export default function PlanCard({
   plan,
-  setSelectedIndex,
+  dispatch,
   dataLength,
 }: PlanCardProps) {
   const { title, color, weekly, fortnightly, monthly } = plan;
 
-  const nextPlan = () => {
-    setSelectedIndex((current) =>
-      current === dataLength - 1 ? 0 : current + 1
-    );
-  };
-
-  const previousPlan = () => {
-    setSelectedIndex((current) =>
-      current === 0 ? dataLength - 1 : current - 1
-    );
-  };
+  const nextPlan = () => dispatch(updateIndex('increment', dataLength));
+  const previousPlan = () => dispatch(updateIndex('decrement', dataLength));
 
   return (
     <Center py={6}>
@@ -81,10 +72,6 @@ export default function PlanCard({
 
         <Box bg={useColorModeValue("gray.100", "gray.900")} px={6} py={10}>
           <List spacing={3}>
-            {/* <ListItem>
-              <ListIcon as={InfoOutlineIcon} color={color} />
-              $ <Text fontWeight={600} display={'inline'}>{weekly.toFixed(2)}</Text> /week
-            </ListItem> */}
             <ListItem>
               <ListIcon as={InfoOutlineIcon} color={color} />
               $ <Text fontWeight={600} display={'inline'}>{fortnightly.toFixed(2)}</Text> /fortnight
@@ -102,7 +89,7 @@ export default function PlanCard({
               bgColor={color}
               _hover={{}}
             />
-            <Button  onClick={() => setSelectedIndex(-1)} bgColor={color} _hover={{}}>
+            <Button  onClick={() => dispatch(resetIndex())} bgColor={color} _hover={{}}>
               CLOSE
             </Button>
             <IconButton
