@@ -1,7 +1,7 @@
-export type SelectIndexReducerAction = ResetIndex | SetIndex | UpdateIndex;
-type SetIndex = ReturnType<typeof setIndex>;
-type ResetIndex = ReturnType<typeof resetIndex>;
-type UpdateIndex = ReturnType<typeof updateIndex>;
+export type SelectIndexReducerAction = ResetIndexAction | SetIndexAction | UpdateIndexAction;
+type SetIndexAction = ReturnType<typeof setIndex>;
+type ResetIndexAction = ReturnType<typeof resetIndex>;
+type UpdateIndexAction = ReturnType<typeof updateIndex>;
 
 
 export const initialIndex = -1;
