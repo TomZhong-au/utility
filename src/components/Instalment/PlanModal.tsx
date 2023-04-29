@@ -7,20 +7,21 @@ import {
   ModalCloseButton,
 
 } from "@chakra-ui/react";
-import React, { SetStateAction } from "react";
+import React from "react";
 import { Plan } from "../../util/genRepayment";
 import PlanCard from "./PlanCard";
+import { SelectIndexReducerAction, resetIndex } from '../../reducer/instalmentReducer';
 
 interface IPlanModal {
   selectedIndex: number;
-  setSelectedIndex: React.Dispatch<SetStateAction<number>>;
+  dispatch:React.Dispatch<SelectIndexReducerAction>;
   plan: Plan;
   dataLength: number;
 }
 
 const PlanModal = ({
   selectedIndex,
-  setSelectedIndex,
+  dispatch,
   plan,
   dataLength,
 }: IPlanModal) => {
@@ -29,7 +30,7 @@ const PlanModal = ({
   return (
     <Modal
       isOpen={selectedIndex !== -1}
-      onClose={() => setSelectedIndex(-1)}
+      onClose={() => dispatch(resetIndex())}
       size="xl"
       isCentered
     >
@@ -39,7 +40,7 @@ const PlanModal = ({
         <ModalCloseButton />
 
         <ModalBody>
-          <PlanCard plan={plan} setSelectedIndex={setSelectedIndex} dataLength={dataLength}/>
+          <PlanCard plan={plan} dispatch={dispatch} dataLength={dataLength}/>
         </ModalBody>
 
       </ModalContent>

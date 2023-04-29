@@ -22,7 +22,6 @@ const Instalment = () => {
         maxW={"1024px"}
         p={"1rem"}
         pt={"1.5rem"}
-        // bgGradient={"linear(to-tr,purple,yellow.400)"}
         bgColor={'#030352'}
         color={"white"}
         m={"auto"}

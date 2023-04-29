@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useReducer } from "react";
 import genRepayment from "../../util/genRepayment";
 import {
   Table,
@@ -11,10 +11,11 @@ import {
   Box,
 } from "@chakra-ui/react";
 import PlanModal from "./PlanModal";
+import { initialIndex, selectIndexReducer, setIndex } from '../../reducer/instalmentReducer';
 
 const DataCards = ({ balance }: { balance: number }) => {
   const repaymentData = useMemo(() => genRepayment(balance), [balance]);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex, dispatch] = useReducer(selectIndexReducer,initialIndex)
 
   const cards = useMemo(()=>repaymentData.map((entry,index) => {
     const { title, weekly, fortnightly, monthly, color } = entry;
@@ -31,7 +32,7 @@ const DataCards = ({ balance }: { balance: number }) => {
                 fontSize={"1.5rem"}
               >
                 {" "}
-                <Box userSelect={"none"} onClick={()=>setSelectedIndex(index)} cursor={"pointer"}>
+                <Box userSelect={"none"} onClick={()=>dispatch(setIndex(index))} cursor={"pointer"}>
                   {title}
                 </Box>
               </Th>
@@ -63,7 +64,7 @@ const DataCards = ({ balance }: { balance: number }) => {
       {cards}
       <PlanModal
         selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
+        dispatch={dispatch}
         plan={repaymentData[selectedIndex]}
         dataLength={repaymentData.length}
       />
