@@ -10,18 +10,18 @@ export const selectIndexReducer = (
   { type, payload }: SelectIndexReducerAction
 ) => {
   switch (type) {
-    case "setIndex":
+    case "instalment/setIndex":
       return payload;
 
-    case "resetIndex":
+    case "instalment/resetIndex":
       return initialIndex;
 
-    case "increment": {
+    case "instalment/increment": {
       const dataLength: number = payload.dataLength;
       return state === dataLength - 1 ? 0 : state + 1;
     }
 
-    case "decrement": {
+    case "instalment/decrement": {
       const dataLength: number = payload.dataLength;
       return state === 0 ? dataLength - 1 : state - 1;
     }
@@ -31,20 +31,20 @@ export const selectIndexReducer = (
 // following are action functions which will return actions including type and payload
 export function setIndex(index: number) {
   return {
-    type: "setIndex",
+    type: "instalment/setIndex",
     payload: index,
   } as const;
 }
 
 export function resetIndex() {
   return {
-    type: "resetIndex",
+    type: "instalment/resetIndex",
     payload: undefined,
   } as const;
 }
 
 export function updateIndex(
-  type: "increment" | "decrement",
+  type: "instalment/increment" | "instalment/decrement",
   dataLength: number
 ) {
   return { type, payload: { dataLength } };
