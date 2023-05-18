@@ -1,13 +1,13 @@
 import './App.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import Instalment from './components/Instalment';
-import NumberGame from './components/NumberGame/NumberGame';
+import NumberGamePage from './components/NumberGame/NumberGamePage';
 
 function App() {
   return (
     <ChakraProvider>
       {/* <Instalment /> */}
-      <NumberGame boardSize={4}/>
+      <NumberGamePage/>
     </ChakraProvider>
   );
 }

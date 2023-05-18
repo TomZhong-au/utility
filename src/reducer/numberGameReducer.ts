@@ -19,10 +19,14 @@ export default function numberGameReducer(state: NumberGameState, { type, payloa
                 return {
                     ...state,
                     progress: id,
-                    gameWin:id===boardSize*boardSize
+                    gameWin:id===boardSize*boardSize,
+                    wrongIndex:-1,
                 }
             } else {
-                return state
+                return {
+                    ...state,
+                    wrongIndex:id
+                }
             }
 
         case ActionType.RESET:
