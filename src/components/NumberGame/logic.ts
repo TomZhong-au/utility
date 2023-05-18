@@ -1,23 +1,27 @@
+/**
+ * generate a shuffled array using the Fisher-Yates shuffle algorithm
+ * @param {number} length
+ * @returns array
+ */
 export function generateRandomArray(length: number) {
-  const arr = new Array(length);
-  
-  for (let i=0;i<length;i++){
-     let partnerIndex=0
-
-     do{
-         partnerIndex=Math.floor(Math.random()*length)
-     } while (partnerIndex===i)
-
-     arr[i]=arr[i]?arr[i]:i+1
-     arr[partnerIndex]=arr[partnerIndex]?arr[partnerIndex]:partnerIndex+1
-
-     const swapNumber=arr[i]
-     arr[i]=arr[partnerIndex]
-     arr[partnerIndex]=swapNumber
-    
-    }
-  
-
-    Array.from({length})
-  return arr
+  const arr = generateArray(length);
+  return shuffleArray(arr);
 }
+
+function generateArray(length: number) {
+  return Array.from({ length }, (_, i) => i + 1);
+}
+
+/**
+ * Fisher-Yates shuffle algorithm
+ * @param array 
+ * @returns shuffuled Array
+ */
+function shuffleArray<T>(array: Array<T>) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j: number = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+

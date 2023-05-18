@@ -9,6 +9,7 @@ export type SelectIndexReducerAction =
   | ResetIndexAction
   | SetIndexAction
   | UpdateIndexAction;
+  
 type SetIndexAction = ReturnType<typeof setIndex>;
 type ResetIndexAction = ReturnType<typeof resetIndex>;
 type UpdateIndexAction = ReturnType<typeof updateIndex>;
