@@ -1,10 +1,10 @@
-import { Box, Button, Center, Container, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
 import { generateRandomArray } from "./logic";
 import Tile from "./Tile";
 import { useEffect, useMemo, useReducer } from 'react';
 import numberGameReducer, { initialState, ActionType } from '../../reducer/numberGameReducer';
 
-
+const err = new Audio('/sound/error.mp3')
 
 const GameContent = ({ boardSize }: { boardSize: number }) => {
 
@@ -16,6 +16,10 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
   useEffect(() => {
     dispatch({ type: ActionType.RESET })
   }, [boardSize])
+
+  useEffect(() => {
+    if (error) err.play()
+  }, [state])
 
   const handleTileClick = (id: number) => {
     dispatch({ type: ActionType.CLICK, payload: { id, boardSize } })
@@ -36,8 +40,8 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
           ))}
         </Grid>
         <Box height={8}>
-            {error && <Text>Try Again</Text>}
-            {gameWin && <Text>You Win</Text>}
+          {error && <Text>Try Again</Text>}
+          {gameWin && <Text>You Win</Text>}
         </Box>
         <Button onClick={restartGame} colorScheme='red'>Restart</Button>
       </VStack>
