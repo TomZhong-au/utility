@@ -7,7 +7,7 @@ function App() {
   return (
     <ChakraProvider>
       {/* <Instalment /> */}
-      <NumberGame />
+      <NumberGame boardSize={4}/>
     </ChakraProvider>
   );
 }

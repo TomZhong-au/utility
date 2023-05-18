@@ -6,17 +6,17 @@ import numberGameReducer, { initialState, ActionType } from '../../reducer/numbe
 
 
 
-const NumberGame = () => {
+const NumberGame = ({boardSize}:{boardSize:number}) => {
 
   const [state, dispatch] = useReducer(numberGameReducer, initialState)
-  const { progress, wrongIndex, boardSize, gameWin, resetGame } = state
+  const { progress, wrongIndex, gameWin, resetGame } = state
 
   const arr = useMemo(() => generateRandomArray(boardSize * boardSize), [resetGame])
 
 
   const handleTileClick = (id: number) => {
     console.log(progress)
-    dispatch({ type: ActionType.CLICK, payload: id })
+    dispatch({ type: ActionType.CLICK, payload: {id,boardSize} })
   }
 
   const restartGame = () => {

@@ -1,15 +1,12 @@
 export const initialState = {
     progress: 0,
     wrongIndex: -1,
-    boardSize: 4,
     gameWin: false,
-    // the value of th eresetGame boolean is not important, it is used to trigger the board reset
+    // the value of the resetGame boolean is not important, it is used to trigger the board reset
     resetGame: false,
 }
 
-// the problem is when the user changes board size, the reducer is not aware of it.
-// the boardSize should be pass from outside as props.
-// 
+
 
 type NumberGameState = typeof initialState
 
@@ -17,10 +14,12 @@ export default function numberGameReducer(state: NumberGameState, { type, payloa
     switch (type) {
         case ActionType.CLICK:
             const currentProgress = state.progress
-            if (payload === currentProgress + 1) {
+            const {id, boardSize}=payload
+            if (id === currentProgress + 1) {
                 return {
                     ...state,
-                    progress: payload
+                    progress: id,
+                    gameWin:id===boardSize*boardSize
                 }
             } else {
                 return state
@@ -43,7 +42,17 @@ export enum ActionType {
     RESET = 'reset'
 }
 
-interface ReducerAction {
-    type: ActionType;
-    payload?: number
+type ReducerAction=ClickAction | ResetAction
+
+interface ClickAction{
+    type:ActionType.CLICK,
+    payload:{
+        id:number,
+        boardSize:number
+    }
+}
+
+interface ResetAction{
+    type:ActionType.RESET,
+    payload?:undefined
 }
