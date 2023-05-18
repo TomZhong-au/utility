@@ -1,8 +1,9 @@
 import { Box, Button, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
 import { generateRandomArray } from "./logic";
 import Tile from "./Tile";
-import { useEffect, useMemo, useReducer } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import numberGameReducer, { initialState, ActionType } from '../../reducer/numberGameReducer';
+import Timer from '../Timer/Timer';
 
 const err = new Audio('/sound/error.mp3')
 
@@ -10,6 +11,7 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
 
   const [state, dispatch] = useReducer(numberGameReducer, initialState)
   const { progress, error, gameWin, resetGame } = state
+  const [timerControl, setTimerControler] = useState('start')
 
   const arr = useMemo(() => generateRandomArray(boardSize * boardSize), [resetGame, boardSize])
 
@@ -19,6 +21,7 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
 
   useEffect(() => {
     if (error) err.play()
+    if (gameWin) setTimerControler('stop')
   }, [state])
 
   const handleTileClick = (id: number) => {
@@ -27,6 +30,8 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
 
   const restartGame = () => {
     dispatch({ type: ActionType.RESET })
+    setTimerControler(()=>'reset')
+    setTimerControler(()=>'start')
   }
 
   return (
@@ -44,6 +49,7 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
           {gameWin && <Text>You Win</Text>}
         </Box>
         <Button onClick={restartGame} colorScheme='red'>Restart</Button>
+        <Timer action={timerControl} />
       </VStack>
     </Box>
   )
