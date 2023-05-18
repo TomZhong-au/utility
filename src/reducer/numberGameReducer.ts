@@ -1,6 +1,6 @@
 export const initialState = {
     progress: 0,
-    wrongIndex: -1,
+    error: false,
     gameWin: false,
     // the value of the resetGame boolean is not important, it is used to trigger the board reset
     resetGame: false,
@@ -14,19 +14,21 @@ export default function numberGameReducer(state: NumberGameState, { type, payloa
     switch (type) {
         case ActionType.CLICK:
             const currentProgress = state.progress
-            const {id, boardSize}=payload
+            const { id, boardSize } = payload
             if (id === currentProgress + 1) {
                 return {
                     ...state,
                     progress: id,
-                    gameWin:id===boardSize*boardSize,
-                    wrongIndex:-1,
+                    gameWin: id === boardSize * boardSize,
+                    error: false,
                 }
-            } else {
-                return {
-                    ...state,
-                    wrongIndex:id
-                }
+            }
+            // these buttons are already pressed, do nothing by returning the state
+            if (id <= currentProgress) return state
+
+            return {
+                ...state,
+                error: true
             }
 
         case ActionType.RESET:
@@ -46,17 +48,17 @@ export enum ActionType {
     RESET = 'reset'
 }
 
-type ReducerAction=ClickAction | ResetAction
+type ReducerAction = ClickAction | ResetAction
 
-interface ClickAction{
-    type:ActionType.CLICK,
-    payload:{
-        id:number,
-        boardSize:number
+interface ClickAction {
+    type: ActionType.CLICK,
+    payload: {
+        id: number,
+        boardSize: number
     }
 }
 
-interface ResetAction{
-    type:ActionType.RESET,
-    payload?:undefined
+interface ResetAction {
+    type: ActionType.RESET,
+    payload?: undefined
 }

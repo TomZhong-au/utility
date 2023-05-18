@@ -1,5 +1,5 @@
 import { Button, Container, Text, Box, HStack } from '@chakra-ui/react';
-import GameContent from './NumberGame';
+import GameContent from './NumberGameContent';
 import { useState } from 'react';
 
 const LEVEL = [
@@ -20,11 +20,12 @@ const NumberGamePage = () => {
 
                 {LEVEL.map(({ diff, number, color }) => {
                     return <Button
+                        key={diff}
                         colorScheme={color}
                         onClick={() => setboardSize(number)}
                         size='sm'
-                        boxShadow={boardSize===number?'4px 3px gray':""}
-                        >
+                        boxShadow={boardSize === number ? '4px 3px gray' : ""}
+                    >
                         {diff.toUpperCase()}
                     </Button>
                 })}

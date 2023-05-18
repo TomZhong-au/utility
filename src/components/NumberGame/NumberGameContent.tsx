@@ -9,16 +9,15 @@ import numberGameReducer, { initialState, ActionType } from '../../reducer/numbe
 const GameContent = ({ boardSize }: { boardSize: number }) => {
 
   const [state, dispatch] = useReducer(numberGameReducer, initialState)
-  const { progress, wrongIndex, gameWin, resetGame } = state
+  const { progress, error, gameWin, resetGame } = state
 
-  const arr = useMemo(() => generateRandomArray(boardSize * boardSize), [resetGame,boardSize])
+  const arr = useMemo(() => generateRandomArray(boardSize * boardSize), [resetGame, boardSize])
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch({ type: ActionType.RESET })
-  },[boardSize])
+  }, [boardSize])
 
   const handleTileClick = (id: number) => {
-    console.log(progress)
     dispatch({ type: ActionType.CLICK, payload: { id, boardSize } })
   }
 
@@ -29,15 +28,18 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
   return (
     <Box my={8}>
       <VStack gap={4}>
-      <Grid templateColumns={`repeat(${boardSize}, 1fr)`} gap={2}>
-        {arr.map((number) => (
-          <GridItem key={number}>
-            <Tile id={number} progress={progress} wrongIndex={wrongIndex} onClick={handleTileClick} />
-          </GridItem>
-        ))}
-      </Grid>
-      {gameWin && <Text>You Win</Text>}
-      <Button onClick={restartGame} colorScheme='red'>Restart</Button>
+        <Grid templateColumns={`repeat(${boardSize}, 1fr)`} gap={2}>
+          {arr.map((number) => (
+            <GridItem key={number}>
+              <Tile id={number} progress={progress} onClick={handleTileClick} />
+            </GridItem>
+          ))}
+        </Grid>
+        <Box height={8}>
+            {error && <Text>Try Again</Text>}
+            {gameWin && <Text>You Win</Text>}
+        </Box>
+        <Button onClick={restartGame} colorScheme='red'>Restart</Button>
       </VStack>
     </Box>
   )
