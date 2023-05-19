@@ -5,9 +5,15 @@ import { secondToHour } from '../../util/secondToHour';
 interface TimerProps {
     action?: 'start' | 'stop',
     reset?: boolean,
+    /**
+     * export time (in seconds) to other components
+     */
     getTime?: (time: number) => void;
 }
 
+/**
+ * the unit of the time is 1 second
+ */
 const Timer = ({ action = 'start', reset = false, getTime }: TimerProps) => {
     // this unit of time is 1 second
     const [time, setTime] = useState(0)

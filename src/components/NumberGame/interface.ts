@@ -1,0 +1,1 @@
+export type NumberGameRecords={boardSize:number,best:Array<number>}[]

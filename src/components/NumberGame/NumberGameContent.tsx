@@ -1,10 +1,11 @@
 import { Box, Button, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
-import { generateRandomArray } from "./logic";
+import { getBestRecord, storeTime } from "./logic";
 import Tile from "./Tile";
-import { useEffect, useMemo, useReducer } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import numberGameReducer, { initialState, ActionType } from '../../reducer/numberGameReducer';
 import Timer from '../Timer/Timer';
 import useReset from '../../hooks/useReset';
+import { generateRandomArray } from './logic/generateRandomArray';
 
 const err = new Audio('/sound/error.mp3')
 
@@ -12,7 +13,8 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
 
   const [state, dispatch] = useReducer(numberGameReducer, initialState)
   const { progress, error, gameWin, resetGame } = state
-  const {reset,setReset}=useReset()
+  const { reset, setReset } = useReset()
+  const [time, setTime] = useState(0)
 
   const arr = useMemo(() => generateRandomArray(boardSize * boardSize), [resetGame, boardSize])
 
@@ -22,7 +24,7 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
     setReset(true)
   }, [boardSize])
 
-  // play error sound when error occurs
+  // play error sound at error
   useEffect(() => {
     if (error) err.play()
   }, [state])
@@ -36,6 +38,12 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
     setReset(true)
   }
 
+  useEffect(() => {
+    if (!gameWin) return
+    // save current time to local storage
+    storeTime(time, boardSize)
+  }, [gameWin])
+
   return (
     <Box my={8}>
       <VStack gap={4}>
@@ -46,12 +54,15 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
             </GridItem>
           ))}
         </Grid>
-        <Box height={8}>
-          {error && <Text>Try Again</Text>}
-          {gameWin && <Text>You Win</Text>}
-        </Box>
+
         <Button onClick={restartGame} colorScheme='red'>Restart</Button>
-        <Timer action={gameWin?"stop":"start"} reset={reset}/>
+        <Timer action={gameWin ? "stop" : "start"} reset={reset} getTime={setTime} />
+        <Box height={8}>
+          {gameWin && (<><Text>You Win. Your best records: </Text>
+            <Text> {getBestRecord(boardSize)}</Text></>)
+
+          }
+        </Box>
       </VStack>
     </Box>
   )
