@@ -8,12 +8,6 @@ interface TimerProps {
     getTime?: (time: number) => void;
 }
 
-/**
- * a timer component
- * @param action 'start'|'stop'
- * @param getTime a setState function (optional) to get time from the timer
- * 
- */
 const Timer = ({ action = 'start', reset = false, getTime }: TimerProps) => {
     // this unit of time is 1 second
     const [time, setTime] = useState(0)
