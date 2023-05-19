@@ -3,44 +3,46 @@ import { useEffect, useState } from 'react';
 import { secondToHour } from '../../util/secondToHour';
 
 interface TimerProps {
-    action?: 'start' | 'stop' | 'reset',
-    unit?: '1s' | '0.01s',
+    action?: 'start' | 'stop',
+    reset?: boolean,
     getTime?: (time: number) => void;
 }
 
 /**
  * a timer component
- * @param action 'start'|'stop'|'continue'|'reset'
- * @param unit '1s' | '0.01s'
- * @param getTime a setState function to get time
+ * @param action 'start'|'stop'
+ * @param getTime a setState function (optional) to get time from the timer
  * 
  */
-const Timer = ({ action='start', unit='1s', getTime }: TimerProps) => {
+const Timer = ({ action = 'start', reset = false, getTime }: TimerProps) => {
+    // this unit of time is 1 second
     const [time, setTime] = useState(0)
 
-    useEffect(()=>{
+    useEffect(() => {
+        if (reset) setTime(0)
+    }, [reset])
+
+    useEffect(() => {
         const handleIncrement = () => {
-            switch (action) {
-                case "stop":
-                    return
-    
-                case "reset":
-                    return setTime(0)
-    
-                default:
-                    setTime(current=>current+1)
-            }
+            if (action === 'stop') return
+            setTime(current => {
+                if (current > 356400) return current
+                return current + 1
+            })
         }
-        const frequency=unit==='1s'?1000:10
-        const clock=setInterval(handleIncrement, frequency)
 
-        return ()=>{clearInterval(clock)}
-    },[action])
+        const clock = setInterval(handleIncrement, 1000)
 
+        return () => { clearInterval(clock) }
+    }, [action])
+
+    // if need to getTime
     getTime && getTime(time)
-const {minute,second}=secondToHour(time)
+
+    const { minute, second } = secondToHour(time)
+
     return (<Box bgColor={'gray'}>
-        {minute.toString().padStart(2,'0')}:{second.toString().padStart(2,'0')}
+        {minute.toString().padStart(2, '0')}:{second.toString().padStart(2, '0')}
     </Box>);
 }
 

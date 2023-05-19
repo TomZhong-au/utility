@@ -11,17 +11,17 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
 
   const [state, dispatch] = useReducer(numberGameReducer, initialState)
   const { progress, error, gameWin, resetGame } = state
-  const [timerControl, setTimerControler] = useState('start')
 
   const arr = useMemo(() => generateRandomArray(boardSize * boardSize), [resetGame, boardSize])
 
+  // reset state when board size changes
   useEffect(() => {
     dispatch({ type: ActionType.RESET })
   }, [boardSize])
 
+  // play error sound when error occurs
   useEffect(() => {
     if (error) err.play()
-    if (gameWin) setTimerControler('stop')
   }, [state])
 
   const handleTileClick = (id: number) => {
@@ -30,8 +30,6 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
 
   const restartGame = () => {
     dispatch({ type: ActionType.RESET })
-    setTimerControler(()=>'reset')
-    setTimerControler(()=>'start')
   }
 
   return (
@@ -49,7 +47,7 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
           {gameWin && <Text>You Win</Text>}
         </Box>
         <Button onClick={restartGame} colorScheme='red'>Restart</Button>
-        <Timer action={timerControl} />
+        <Timer action={gameWin?"stop":"start"} />
       </VStack>
     </Box>
   )
