@@ -12,7 +12,7 @@ const LEVEL = [
 const NumberGamePage = () => {
     const [boardSize, setboardSize] = useState(4)
     return (
-        <Container centerContent bg='blue.300' maxW={'3xl'} py={6}>
+        <Container centerContent bg='blue.300' maxW={'4xl'} py={6}>
             <Text fontSize={'3xl'}>Number Game</Text>
             <Text fontSize={'xl'}>Click numbers in ascending order, try to finish the game as fast as possible</Text>
             <Text fontSize={'md'}>Select difficulties</Text>

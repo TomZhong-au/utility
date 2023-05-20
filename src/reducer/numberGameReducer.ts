@@ -4,6 +4,7 @@ export const initialState = {
     gameWin: false,
     // the value of the resetGame boolean is not important, it is used to trigger the board reset
     resetGame: false,
+    newBestRecord: false,
 }
 
 
@@ -37,6 +38,12 @@ export default function numberGameReducer(state: NumberGameState, { type, payloa
                 resetGame: !state.resetGame
             }
 
+        case ActionType.NEW_RECORD:
+            return {
+                ...state,
+                newBestRecord: true,
+            }
+
         default:
             return state
     }
@@ -45,10 +52,11 @@ export default function numberGameReducer(state: NumberGameState, { type, payloa
 
 export enum ActionType {
     CLICK = 'click',
-    RESET = 'reset'
+    RESET = 'reset',
+    NEW_RECORD = 'setRecord'
 }
 
-type ReducerAction = ClickAction | ResetAction
+type ReducerAction = ClickAction | ResetAction | SetRecord
 
 interface ClickAction {
     type: ActionType.CLICK,
@@ -60,5 +68,10 @@ interface ClickAction {
 
 interface ResetAction {
     type: ActionType.RESET,
+    payload?: undefined
+}
+
+interface SetRecord {
+    type: ActionType.NEW_RECORD,
     payload?: undefined
 }

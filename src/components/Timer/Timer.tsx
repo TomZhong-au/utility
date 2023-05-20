@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { millisecondsToHour } from '../../util/timeConversion';
 import React from 'react';
 
@@ -13,33 +13,34 @@ interface TimerProps {
 }
 
 /**
- * the unit of the time is 1 ms
+ * 
+ * @param props.action accepts 'start' | 'stop' to control the timer's running
+ * @param props.reset accepts a boolean to instruct the timer to reset. Should use with the useResetSignal custom hook.
+ * @param props.getTime a setState function to pass the time to parent component.
+ * @returns 
  */
 const Timer = ({ action = 'start', reset = false, getTime }: TimerProps) => {
     // this unit of time is 1 ms
     const [time, setTime] = useState(0)
+    const startTime=useRef(performance.now())
 
     useEffect(() => {
-        if (reset) setTime(0)
+        if (reset) startTime.current=performance.now()
     }, [reset])
 
     useEffect(() => {
         const handleIncrement = () => {
             if (action === 'stop') return
-            setTime(current => current + 1)
+            setTime(performance.now()-startTime.current)
         }
-
-        const clock = setInterval(handleIncrement, 10)
-
+        const clock = setInterval(handleIncrement, 100)
         return () => { clearInterval(clock) }
     }, [action])
 
-    // if need to getTime
+    // if getTime function is passed in
     useEffect(() => {
         if (getTime && action === 'stop') {
-            // Delay the time update using setTimeout to avoid updating state while rendering another component
             getTime(time);
-
         }
     }, [getTime, time, action]);
 
