@@ -1,5 +1,5 @@
 import { Box, Button, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
-import { getBestRecord, storeTime } from "./logic";
+// import { storeTime } from "./logic";
 import Tile from "./Tile";
 import { useEffect, useMemo, useReducer, useState } from 'react';
 import numberGameReducer, { initialState, ActionType } from '../../reducer/numberGameReducer';
@@ -41,7 +41,7 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
   useEffect(() => {
     if (!gameWin) return
     // save current time to local storage
-    storeTime(time, boardSize)
+    // storeTime(time, boardSize)
   }, [gameWin])
 
   return (
@@ -58,8 +58,7 @@ const GameContent = ({ boardSize }: { boardSize: number }) => {
         <Button onClick={restartGame} colorScheme='red'>Restart</Button>
         <Timer action={gameWin ? "stop" : "start"} reset={reset} getTime={setTime} />
         <Box height={8}>
-          {gameWin && (<><Text>You Win. Your best records: </Text>
-            <Text> {getBestRecord(boardSize)}</Text></>)
+          {gameWin && <Text>You Win. Your best records: </Text>
 
           }
         </Box>

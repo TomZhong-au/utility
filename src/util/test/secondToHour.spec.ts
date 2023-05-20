@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { secondToHour } from '../secondToHour';
+import { secondToHour } from '../timeConversion';
 
 describe('secondToMin', () => {
     it('should convert seconds to minutes and seconds', () => {

@@ -1,21 +1,22 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { secondToHour } from '../../util/secondToHour';
+import { millisecondsToHour } from '../../util/timeConversion';
+import React from 'react';
 
 interface TimerProps {
     action?: 'start' | 'stop',
     reset?: boolean,
     /**
-     * export time (in seconds) to other components
+     * export time (in ms) to other components
      */
     getTime?: (time: number) => void;
 }
 
 /**
- * the unit of the time is 1 second
+ * the unit of the time is 1 ms
  */
 const Timer = ({ action = 'start', reset = false, getTime }: TimerProps) => {
-    // this unit of time is 1 second
+    // this unit of time is 1 ms
     const [time, setTime] = useState(0)
 
     useEffect(() => {
@@ -25,25 +26,29 @@ const Timer = ({ action = 'start', reset = false, getTime }: TimerProps) => {
     useEffect(() => {
         const handleIncrement = () => {
             if (action === 'stop') return
-            setTime(current => {
-                if (current > 356400) return current
-                return current + 1
-            })
+            setTime(current => current + 1)
         }
 
-        const clock = setInterval(handleIncrement, 1000)
+        const clock = setInterval(handleIncrement, 10)
 
         return () => { clearInterval(clock) }
     }, [action])
 
     // if need to getTime
-    getTime && getTime(time)
+    useEffect(() => {
+        if (getTime && action === 'stop') {
+            // Delay the time update using setTimeout to avoid updating state while rendering another component
+            getTime(time);
 
-    const { minute, second } = secondToHour(time)
+        }
+    }, [getTime, time, action]);
 
-    return (<Box bgColor={'gray'}>
-        {minute.toString().padStart(2, '0')}:{second.toString().padStart(2, '0')}
+    const { minute, second, millisecond } = millisecondsToHour(time)
+
+    return (<Box>
+        <Text as='span' fontSize={'lg'}>{minute.toString().padStart(2, '0')}:{second.toString().padStart(2, '0')}.</Text>
+        <Text as='span' fontSize={'sm'}>{millisecond.toString().padStart(3, '0')}</Text>
     </Box>);
 }
 
-export default Timer;
+export default React.memo(Timer);
