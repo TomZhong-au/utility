@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon, CalendarIcon, InfoOutlineIcon} from "@chakra-ui/icons";
 import { Plan } from "../../util/genRepayment";
-import { SelectIndexReducerAction, resetIndex, updateIndex } from '../../reducer/instalmentReducer';
+import { SelectIndexActionTypes, SelectIndexReducerAction, resetIndex, updateIndex } from '../../reducer/instalmentReducer';
 
 interface PlanCardProps {
   plan: Plan;
@@ -28,8 +28,8 @@ export default function PlanCard({
 }: PlanCardProps) {
   const { title, color, weekly, fortnightly, monthly } = plan;
 
-  const nextPlan = () => dispatch(updateIndex('increment', dataLength));
-  const previousPlan = () => dispatch(updateIndex('decrement', dataLength));
+  const nextPlan = () => dispatch(updateIndex(SelectIndexActionTypes.INCREMENT, dataLength));
+  const previousPlan = () => dispatch(updateIndex(SelectIndexActionTypes.DECREMENT, dataLength));
 
   return (
     <Center py={6}>

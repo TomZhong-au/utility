@@ -1,4 +1,4 @@
-enum SelectIndexActionTypes {
+export enum SelectIndexActionTypes {
   SET_INDEX = "instalment/setIndex",
   RESET_INDEX = "instalment/resetIndex",
   INCREMENT = "instalment/increment",
