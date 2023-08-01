@@ -1,5 +1,7 @@
 import {
   Box,
+  Center,
+  Container,
   Grid,
   GridItem,
   NumberInput,
@@ -17,7 +19,7 @@ const Instalment = () => {
   const orientation = useOrientation();
 
   return (
-    <Box width={"100vw"} bgColor={"#dda706"}>
+    <Box width={"100vw"} h="100vh" bgColor={"#dda706"}>
       <Box
         maxW={"1024px"}
         p={"1rem"}
@@ -67,8 +69,9 @@ const Instalment = () => {
         ) : (
           <DataCards balance={amount - lumpsum} />
         )}
-
+        <Center mt={'2rem'} fontSize={'sm'}>© Copyright Tom</Center>
       </Box>
+
     </Box>
   );
 };

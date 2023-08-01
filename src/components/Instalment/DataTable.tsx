@@ -36,7 +36,6 @@ const DataTable = ({ balance }: { balance: number }) => {
         <Tr
           bg={isSelcted ? "green.400" : ""}
           opacity={isSelcted === false ? "50%" : "100%"}
-          transform={isSelcted ? "scale(1.03,1.03)" : ""}
           fontWeight={isSelcted ? "600" : ""}
           key={title}
           fontSize={'xl'}
@@ -63,7 +62,7 @@ const DataTable = ({ balance }: { balance: number }) => {
   );
 
   return (
-    <TableContainer maxWidth={"95%"} >
+    <TableContainer>
       <Table
         cellSpacing={"0px"}
         style={{ 
