@@ -9,19 +9,19 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import DataCards from "./DataCards";
-import useOrientation from "../../hooks/useOrientation";
 import DataTable from "./DataTable";
+import useIsMobile from '../../hooks/useIsMobile';
 
 const Instalment = () => {
   const [amount, setAmount] = useState(0);
   const [lumpsum, setLumpsum] = useState(0);
-  const orientation = useOrientation();
+  const isMobile=useIsMobile()
 
   return (
     <Box width={"100vw"} h="100vh" bgImage={'https://tailwindui.com/img/beams-home@95.jpg'}>
-    {orientation === "landscape" 
+    {!isMobile
     ? <Center p={'3rem'} color={'#030352'}>
-      <h1>A Quick Repayment Calculator </h1>
+      <h1>Quick Repayment Calculator </h1>
       </Center>
     :null}
 
@@ -70,7 +70,7 @@ const Instalment = () => {
         </Grid>
         <Spacer height={"1rem"} />
 
-        {orientation === "landscape" ? (
+        {!isMobile ? (
           <DataTable balance={amount - lumpsum} />
         ) : (
           <DataCards balance={amount - lumpsum} />
