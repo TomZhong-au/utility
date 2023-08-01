@@ -10,8 +10,7 @@ import {
   TableCaption,
   TableContainer,
   Button,
-  Box,
-  Center,
+
 } from "@chakra-ui/react";
 
 const DataTable = ({ balance }: { balance: number }) => {
