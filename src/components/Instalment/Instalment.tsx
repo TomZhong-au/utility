@@ -19,7 +19,13 @@ const Instalment = () => {
   const orientation = useOrientation();
 
   return (
-    <Box width={"100vw"} h="100vh" bgColor={"#dda706"}>
+    <Box width={"100vw"} h="100vh" bgImage={'https://tailwindui.com/img/beams-home@95.jpg'}>
+    {orientation === "landscape" 
+    ? <Center p={'3rem'} color={'#030352'}>
+      <h1>A Quick Repayment Calculator </h1>
+      </Center>
+    :null}
+
       <Box
         maxW={"1024px"}
         p={"1rem"}
@@ -27,6 +33,7 @@ const Instalment = () => {
         bgColor={'#030352'}
         color={"white"}
         m={"auto"}
+        borderRadius={'1rem'}
       >
         <Grid templateColumns="repeat(2, 1fr)" gap={"5px"} px={"5px"}>
           <GridItem fontSize={"2xl"}>
